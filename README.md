@@ -48,6 +48,8 @@ file `app/code/Aware/Checkout/etc/db_schema.xml`
 
 And route for our admin page
 
+
+
 file: `app/code/Aware/Checkout/etc/adminhtml/routes.xml`
 ```xml
 <?xml version="1.0"?>
