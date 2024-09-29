@@ -96,6 +96,19 @@ let also non admin users see our module seting up acl.xml
 
 file: `app/code/Aware/Checkout/etc/acl.xml`
 
+```xml
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Acl/etc/acl.xsd">
+    <acl>
+        <resources>
+            <resource id="Magento_Backend::admin">
+                <resource id="Aware_Checkout::main" title="Aware Checkout Access" sortOrder="10" />
+            </resource>
+        </resources>
+    </acl>
+</config>
+```
+
 and now lets create controller
 
 file `app/code/Aware/Checkout/Controller/Adminhtml/Index/Index.php`
