@@ -16,6 +16,7 @@ ComponentRegistrar::register(
     'Aware_Checkout',
     __DIR__
 );
+
 ```
 
 file `app/code/Aware/Checkout/etc/module.xml`
@@ -62,7 +63,72 @@ file: `app/code/Aware/Checkout/etc/adminhtml/routes.xml`
 </config>
 ```
 
+lets put our page in admin menu
 
+file `app/code/Aware/Checkout/etc/adminhtml/menu.xml`
+
+```xml
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Menu/etc/menu.xsd">
+    <menu>
+        <add id="Aware_Checkout::parent"
+             title="Aware Checkout"
+             module="Aware_Checkout"
+             sortOrder="100"
+             resource="Aware_Checkout::main"/>
+
+            <add id="Aware_Checkout::main"
+             title="Main"
+             module="Aware_Checkout"
+             sortOrder="100"
+             resource="Aware_Checkout::main"
+             parent="Aware_Checkout::parent"
+             action="aware_checkout_admin/index/index"/>
+
+             
+
+
+    </menu>
+</config>
+```
+
+let also non admin users see our module seting up acl.xml
+
+file: `app/code/Aware/Checkout/etc/acl.xml`
+
+and now lets create controller
+
+file `app/code/Aware/Checkout/Controller/Adminhtml/Index/Index.php`
+
+```php
+<?php
+
+namespace Aware\Checkout\Controller\Adminhtml\Index;
+
+use Magento\Backend\App\Action;
+use Magento\Backend\App\Action\Context;
+use Magento\Framework\View\Result\PageFactory;
+
+class Index extends Action
+{
+    protected $resultPageFactory;
+
+
+    public function __construct(Context $context, PageFactory $resultPageFactory)
+    {
+        parent::__construct($context);
+        $this->resultPageFactory = $resultPageFactory;
+    }
+
+    public function execute()
+    {
+        $resultPage = $this->resultPageFactory->create();
+        $resultPage->getConfig()->getTitle()->prepend((__('Posts')));
+
+        return $resultPage;
+    }
+}
+```
 
 
 
